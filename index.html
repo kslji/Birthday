@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Nikki! 🎉</title>
+<title>🎂 Happy Birthday Nikki! 🎉</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -272,18 +273,29 @@
 
   .video-wrapper {
     max-width: 800px;
+    width: 100%;
     margin: 0 auto;
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(192,132,252,0.3), 0 0 0 5px var(--purple), 8px 8px 0 var(--pink);
     position: relative;
+    padding-top: 56.25%;
   }
 
   .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
     width: 100%;
-    aspect-ratio: 16/9;
+    height: 100%;
     display: block;
     border: none;
+  }
+
+  @media (max-width: 480px) {
+    .video-wrapper {
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(192,132,252,0.3), 0 0 0 3px var(--purple), 4px 4px 0 var(--pink);
+    }
   }
 
   /* ===== WISH SECTION ===== */
