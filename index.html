@@ -505,6 +505,13 @@
   </div>
 </section>
 
+<!-- Hidden YouTube background music player -->
+<div id="yt-bg-player"></div>
+
+<!-- Music toggle button -->
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle Music">🎵</button>
+<div class="music-label">Toggle Music</div>
+
 <!-- FOOTER -->
 <footer>
   <div style="font-size:2.5rem; margin-bottom:10px;">🎀 Happy Birthday Nikki (Don) 🎀</div>
@@ -589,3 +596,86 @@
 </script>
 </body>
 </html>
+
+<div id="yt-bg-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
+
+<style>
+  .music-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9998;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6EB4, #C084FC);
+    border: none;
+    cursor: pointer;
+    font-size: 1.7rem;
+    box-shadow: 0 6px 20px rgba(255,110,180,0.5), 0 0 0 4px white;
+    animation: musicPulse 2s infinite;
+    transition: transform 0.2s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .music-btn:hover { transform: scale(1.12); }
+  @keyframes musicPulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(255,110,180,0.5), 0 0 0 4px white; }
+    50% { box-shadow: 0 6px 30px rgba(255,110,180,0.9), 0 0 0 7px white; }
+  }
+  .music-label {
+    position: fixed;
+    bottom: 100px;
+    right: 18px;
+    background: white;
+    border: 3px solid #FF6EB4;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #FF6EB4;
+    font-family: 'Nunito', sans-serif;
+    box-shadow: 3px 3px 0 #FF6EB4;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .music-btn:hover + .music-label { opacity: 1; }
+</style>
+
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+<div class="music-label">Toggle Music 🎶</div>
+
+<script>
+  var bgPlayer, musicPlaying = false, musicReady = false;
+  var ytTag = document.createElement('script');
+  ytTag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(ytTag);
+
+  function onYouTubeIframeAPIReady() {
+    bgPlayer = new YT.Player('yt-bg-player', {
+      videoId: 'sqkzN2Ye_pk',
+      playerVars: { autoplay: 1, loop: 1, playlist: 'sqkzN2Ye_pk', controls: 0, disablekb: 1, fs: 0 },
+      events: {
+        onReady: function(e) {
+          musicReady = true;
+          e.target.setVolume(40);
+          e.target.playVideo();
+          musicPlaying = true;
+        }
+      }
+    });
+  }
+
+  function toggleMusic() {
+    if (!musicReady) return;
+    if (musicPlaying) {
+      bgPlayer.pauseVideo();
+      document.getElementById('musicBtn').textContent = '🔇';
+      musicPlaying = false;
+    } else {
+      bgPlayer.playVideo();
+      document.getElementById('musicBtn').textContent = '🎵';
+      musicPlaying = true;
+    }
+  }
+</script>
