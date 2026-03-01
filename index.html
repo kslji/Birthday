@@ -464,28 +464,59 @@
   </div>
 </section>
 
-<!-- VIDEO -->
+<!-- AUDIO PLAYER -->
 <section class="video-section">
   <div class="section-title">🎵 This one's for you!</div>
   <p class="section-subtitle">Sit back, relax & enjoy your special song 🎶</p>
 
   <div class="cake-container">🎂</div>
 
-  <a href="https://youtu.be/0-OhS6GSTVU" target="_blank" style="
-    display: inline-block;
-    background: #FF0000;
-    color: white;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    padding: 18px 40px;
-    border-radius: 50px;
-    text-decoration: none;
-    box-shadow: 4px 4px 0 #990000;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  " onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='6px 8px 0 #990000'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='4px 4px 0 #990000'">
-    ▶ Play Your Birthday Song 🎵
-  </a>
+  <!-- Custom Audio Player UI -->
+  <div id="audioPlayer" style="
+    max-width: 420px;
+    width: 90%;
+    margin: 0 auto;
+    background: white;
+    border-radius: 28px;
+    padding: 30px 28px;
+    box-shadow: 0 20px 60px rgba(192,132,252,0.2), 0 0 0 4px var(--purple), 6px 6px 0 var(--pink);
+    text-align: center;
+  ">
+    <div style="font-size:3.5rem; margin-bottom:10px;" id="musicNote">🎶</div>
+    <div style="font-family:'Pacifico',cursive; font-size:1.1rem; color:var(--purple); margin-bottom:4px;">Playing for Nikki 💕</div>
+    <div style="font-size:0.85rem; color:#aaa; font-weight:600; margin-bottom:24px;" id="songStatus">Loading song...</div>
+
+    <!-- Progress Bar -->
+    <div style="background:#f0e6ff; border-radius:50px; height:8px; margin-bottom:20px; overflow:hidden;">
+      <div id="progressBar" style="height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--purple)); border-radius:50px; transition:width 0.5s linear;"></div>
+    </div>
+
+    <!-- Controls -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
+      <button onclick="seekBack()" style="background:none;border:none;font-size:1.6rem;cursor:pointer;" title="Rewind 10s">⏪</button>
+      <button id="playPauseBtn" onclick="toggleAudio()" style="
+        width:64px; height:64px; border-radius:50%;
+        background:linear-gradient(135deg,var(--pink),var(--purple));
+        border:none; font-size:1.8rem; cursor:pointer;
+        box-shadow:4px 4px 0 #9333ea;
+        transition:transform 0.15s ease;
+        display:flex; align-items:center; justify-content:center;
+      ">▶️</button>
+      <button onclick="seekForward()" style="background:none;border:none;font-size:1.6rem;cursor:pointer;" title="Forward 10s">⏩</button>
+    </div>
+
+    <!-- Volume -->
+    <div style="display:flex; align-items:center; gap:10px; margin-top:20px; justify-content:center;">
+      <span style="font-size:1.2rem;">🔈</span>
+      <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="setVolume(this.value)" style="
+        width:120px; accent-color:var(--pink); cursor:pointer;
+      ">
+      <span style="font-size:1.2rem;">🔊</span>
+    </div>
+  </div>
+
+  <!-- Hidden YouTube player for audio -->
+  <div id="audioYT" style="position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;"></div>
 </section>
 
 <!-- WISHES -->
@@ -609,7 +640,7 @@
 </body>
 </html>
 
-<div id="yt-bg-player" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
+
 
 <style>
   .music-btn {
@@ -658,36 +689,87 @@
 <div class="music-label">Toggle Music 🎶</div>
 
 <script>
-  var bgPlayer, musicPlaying = false, musicReady = false;
+  var audioPlayer, audioReady = false, audioPlaying = false;
+  var progressInterval;
+
   var ytTag = document.createElement('script');
   ytTag.src = "https://www.youtube.com/iframe_api";
   document.head.appendChild(ytTag);
 
   function onYouTubeIframeAPIReady() {
-    bgPlayer = new YT.Player('yt-bg-player', {
+    audioPlayer = new YT.Player('audioYT', {
       videoId: 'sqkzN2Ye_pk',
       playerVars: { autoplay: 1, loop: 1, playlist: 'sqkzN2Ye_pk', controls: 0, disablekb: 1, fs: 0 },
       events: {
         onReady: function(e) {
-          musicReady = true;
-          e.target.setVolume(40);
+          audioReady = true;
+          e.target.setVolume(70);
           e.target.playVideo();
-          musicPlaying = true;
+          audioPlaying = true;
+          document.getElementById('playPauseBtn').textContent = '⏸️';
+          document.getElementById('songStatus').textContent = '♪ Now Playing...';
+          document.getElementById('musicBtn').textContent = '🎵';
+          startProgress();
+        },
+        onStateChange: function(e) {
+          if (e.data === YT.PlayerState.PLAYING) {
+            audioPlaying = true;
+            document.getElementById('playPauseBtn').textContent = '⏸️';
+            document.getElementById('songStatus').textContent = '♪ Now Playing...';
+            startProgress();
+          } else if (e.data === YT.PlayerState.PAUSED) {
+            audioPlaying = false;
+            document.getElementById('playPauseBtn').textContent = '▶️';
+            document.getElementById('songStatus').textContent = 'Paused';
+            clearInterval(progressInterval);
+          }
         }
       }
     });
   }
 
-  function toggleMusic() {
-    if (!musicReady) return;
-    if (musicPlaying) {
-      bgPlayer.pauseVideo();
-      document.getElementById('musicBtn').textContent = '🔇';
-      musicPlaying = false;
+  function toggleAudio() {
+    if (!audioReady) return;
+    if (audioPlaying) {
+      audioPlayer.pauseVideo();
     } else {
-      bgPlayer.playVideo();
-      document.getElementById('musicBtn').textContent = '🎵';
-      musicPlaying = true;
+      audioPlayer.playVideo();
     }
+  }
+
+  function seekBack() {
+    if (!audioReady) return;
+    audioPlayer.seekTo(Math.max(0, audioPlayer.getCurrentTime() - 10), true);
+  }
+
+  function seekForward() {
+    if (!audioReady) return;
+    audioPlayer.seekTo(audioPlayer.getCurrentTime() + 10, true);
+  }
+
+  function setVolume(val) {
+    if (!audioReady) return;
+    audioPlayer.setVolume(parseInt(val));
+  }
+
+  function startProgress() {
+    clearInterval(progressInterval);
+    progressInterval = setInterval(function() {
+      if (!audioReady) return;
+      var duration = audioPlayer.getDuration();
+      var current = audioPlayer.getCurrentTime();
+      if (duration > 0) {
+        var pct = (current / duration) * 100;
+        document.getElementById('progressBar').style.width = pct + '%';
+      }
+    }, 500);
+  }
+
+  // Sync floating music button with audio player
+  function toggleMusic() {
+    toggleAudio();
+    setTimeout(function() {
+      document.getElementById('musicBtn').textContent = audioPlaying ? '🔇' : '🎵';
+    }, 100);
   }
 </script>
