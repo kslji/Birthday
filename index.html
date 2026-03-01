@@ -484,7 +484,7 @@
   ">
     <div style="font-size:3.5rem; margin-bottom:10px;" id="musicNote">🎶</div>
     <div style="font-family:'Pacifico',cursive; font-size:1.1rem; color:var(--purple); margin-bottom:4px;">Playing for Nikki 💕</div>
-    <div style="font-size:0.85rem; color:#aaa; font-weight:600; margin-bottom:24px;" id="songStatus">Loading song...</div>
+    <div style="font-size:0.85rem; color:#aaa; font-weight:600; margin-bottom:24px;" id="songStatus">⏳ Tap ▶️ to start the song</div>
 
     <!-- Progress Bar -->
     <div style="background:#f0e6ff; border-radius:50px; height:8px; margin-bottom:20px; overflow:hidden;">
@@ -547,9 +547,6 @@
     </div>
   </div>
 </section>
-
-<!-- Hidden YouTube background music player -->
-<div id="yt-bg-player"></div>
 
 <!-- Music toggle button -->
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Toggle Music">🎵</button>
@@ -704,12 +701,29 @@
         onReady: function(e) {
           audioReady = true;
           e.target.setVolume(70);
+          // Try autoplay first
           e.target.playVideo();
           audioPlaying = true;
           document.getElementById('playPauseBtn').textContent = '⏸️';
           document.getElementById('songStatus').textContent = '♪ Now Playing...';
           document.getElementById('musicBtn').textContent = '🎵';
           startProgress();
+          // Fallback: start on first user interaction if autoplay blocked
+          var started = false;
+          function startOnInteract() {
+            if (!started && audioReady) {
+              started = true;
+              e.target.playVideo();
+              audioPlaying = true;
+              document.getElementById('playPauseBtn').textContent = '⏸️';
+              document.getElementById('songStatus').textContent = '♪ Now Playing...';
+              document.removeEventListener('click', startOnInteract);
+              document.removeEventListener('touchstart', startOnInteract);
+              startProgress();
+            }
+          }
+          document.addEventListener('click', startOnInteract);
+          document.addEventListener('touchstart', startOnInteract);
         },
         onStateChange: function(e) {
           if (e.data === YT.PlayerState.PLAYING) {
