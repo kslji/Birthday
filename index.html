@@ -542,7 +542,7 @@
   <!-- Actual YouTube iframe - autoplay muted, styled to be tiny but functional -->
   <div style="width:1px;height:1px;overflow:hidden;position:absolute;">
     <iframe id="ytFrame"
-      src="https://www.youtube.com/embed/YCNp7qfdYMQ?autoplay=1&mute=1&start=13&loop=1&playlist=YCNp7qfdYMQ&controls=0&playsinline=1"
+      src="https://www.youtube.com/embed/sqkzN2Ye_pk?autoplay=1&mute=1&start=0&loop=1&playlist=sqkzN2Ye_pk&controls=0&playsinline=1"
       allow="autoplay; encrypted-media"
       allowfullscreen
       style="width:1px;height:1px;border:none;">
@@ -686,13 +686,13 @@
     var frame = document.getElementById('ytFrame');
     if (isMuted) {
       // Replace src with unmuted version - most reliable way
-      frame.src = "https://www.youtube.com/embed/YCNp7qfdYMQ?autoplay=1&mute=0&start=13&loop=1&playlist=YCNp7qfdYMQ&controls=0&playsinline=1";
+      frame.src = "https://www.youtube.com/embed/sqkzN2Ye_pk?autoplay=1&mute=0&start=0&loop=1&playlist=sqkzN2Ye_pk&controls=0&playsinline=1";
       isMuted = false;
       document.getElementById('unmuteBtn').textContent = '🔇 Mute';
       document.getElementById('unmuteBtn').style.background = 'linear-gradient(135deg,#888,#555)';
       document.getElementById('songStatus').textContent = '♪ Now Playing... Happy Birthday Ma! 💛';
     } else {
-      frame.src = "https://www.youtube.com/embed/YCNp7qfdYMQ?autoplay=1&mute=1&start=13&loop=1&playlist=YCNp7qfdYMQ&controls=0&playsinline=1";
+      frame.src = "https://www.youtube.com/embed/sqkzN2Ye_pk?autoplay=1&mute=1&start=0&loop=1&playlist=sqkzN2Ye_pk&controls=0&playsinline=1";
       isMuted = true;
       document.getElementById('unmuteBtn').textContent = '🔊 Tap to Hear Music!';
       document.getElementById('unmuteBtn').style.background = 'linear-gradient(135deg,var(--saffron),var(--rose))';
