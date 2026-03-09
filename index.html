@@ -474,7 +474,7 @@
 <section class="hero">
   <div class="floaters" id="floaters"></div>
 
-  <div class="top-tag">🌸 Today Is Her Day 🌸</div>
+  <div class="top-tag">🌸 Today Is Your Day Ma, Enjoy!! 🌸</div>
   <div class="hero-title">Happy Birthday</div>
   <div class="hero-name">Ma</div>
   <div class="subtitle">The <span>heart & soul</span> of our entire universe 💛</div>
@@ -569,7 +569,7 @@
     </div>
   </div>
 
-  <div id="audioYT" style="position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;"></div>
+  <div id="audioYT" style="position:fixed;top:-9999px;left:-9999px;width:200px;height:200px;visibility:hidden;"></div>
 </section>
 
 <!-- WISHES -->
@@ -675,8 +675,9 @@
 
   setTimeout(launchConfetti, 800);
 
-  // YouTube audio
+  // YouTube audio - autoplay on load
   var audioPlayer, audioReady = false, audioPlaying = false, progressInterval;
+  var unmuteTriggered = false;
 
   var ytTag = document.createElement('script');
   ytTag.src = "https://www.youtube.com/iframe_api";
@@ -685,28 +686,55 @@
   function onYouTubeIframeAPIReady() {
     audioPlayer = new YT.Player('audioYT', {
       videoId: 'YCNp7qfdYMQ',
-      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, start: 13, mute: 1 },
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        start: 13,
+        mute: 1,
+        playsinline: 1
+      },
       events: {
         onReady: function(e) {
           audioReady = true;
           e.target.mute();
           e.target.seekTo(13, true);
           e.target.playVideo();
-          // Unmute after a short delay — browser allows muted autoplay, then we unmute
-          setTimeout(function() {
-            e.target.unMute();
-            e.target.setVolume(70);
-          }, 500);
           audioPlaying = true;
           document.getElementById('playPauseBtn').textContent = '⏸️';
-          document.getElementById('songStatus').textContent = '♪ Now Playing...';
+          document.getElementById('songStatus').textContent = '🔇 Playing (tap anywhere to unmute)';
           startProgress();
+
+          // Unmute on ANY first interaction
+          function doUnmute() {
+            if (unmuteTriggered) return;
+            unmuteTriggered = true;
+            e.target.unMute();
+            e.target.setVolume(70);
+            document.getElementById('songStatus').textContent = '♪ Now Playing...';
+            ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
+              document.removeEventListener(ev, doUnmute);
+            });
+          }
+          ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
+            document.addEventListener(ev, doUnmute, { once: true });
+          });
+
+          // Also try unmuting after 1s automatically
+          setTimeout(function() { doUnmute(); }, 1000);
         },
         onStateChange: function(e) {
           if (e.data === YT.PlayerState.PLAYING) {
-            audioPlaying = true; document.getElementById('playPauseBtn').textContent = '⏸️'; document.getElementById('songStatus').textContent = '♪ Now Playing...'; startProgress();
+            audioPlaying = true;
+            document.getElementById('playPauseBtn').textContent = '⏸️';
+            if (unmuteTriggered) document.getElementById('songStatus').textContent = '♪ Now Playing...';
+            startProgress();
           } else if (e.data === YT.PlayerState.PAUSED) {
-            audioPlaying = false; document.getElementById('playPauseBtn').textContent = '▶️'; document.getElementById('songStatus').textContent = 'Paused'; clearInterval(progressInterval);
+            audioPlaying = false;
+            document.getElementById('playPauseBtn').textContent = '▶️';
+            document.getElementById('songStatus').textContent = 'Paused';
+            clearInterval(progressInterval);
           } else if (e.data === YT.PlayerState.ENDED) {
             e.target.seekTo(13, true);
             e.target.playVideo();
@@ -716,10 +744,20 @@
     });
   }
 
-  function toggleAudio() { if (!audioReady) return; audioPlaying ? audioPlayer.pauseVideo() : audioPlayer.playVideo(); }
-  function seekBack() { if (!audioReady) return; audioPlayer.seekTo(Math.max(0, audioPlayer.getCurrentTime() - 10), true); }
+  function toggleAudio() {
+    if (!audioReady) return;
+    if (audioPlaying) {
+      audioPlayer.pauseVideo();
+    } else {
+      audioPlayer.unMute();
+      audioPlayer.setVolume(parseInt(document.getElementById('volumeSlider').value));
+      audioPlayer.playVideo();
+      unmuteTriggered = true;
+    }
+  }
+  function seekBack() { if (!audioReady) return; audioPlayer.seekTo(Math.max(13, audioPlayer.getCurrentTime() - 10), true); }
   function seekForward() { if (!audioReady) return; audioPlayer.seekTo(audioPlayer.getCurrentTime() + 10, true); }
-  function setVolume(val) { if (!audioReady) return; audioPlayer.setVolume(parseInt(val)); }
+  function setVolume(val) { if (!audioReady) return; audioPlayer.unMute(); audioPlayer.setVolume(parseInt(val)); unmuteTriggered = true; }
   function startProgress() {
     clearInterval(progressInterval);
     progressInterval = setInterval(function() {
