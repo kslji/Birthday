@@ -3,43 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎂 Happy Birthday Nikki! 🎉</title>
+<title>🎂 Happy Birthday Ma! ❤️</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --pink: #FF6EB4;
-    --yellow: #FFD93D;
-    --mint: #6BCFB0;
-    --purple: #C084FC;
-    --coral: #FF8C69;
-    --sky: #60C7F5;
-    --white: #FFFDF9;
+    --saffron: #FF6B2B;
+    --gold: #F5A623;
+    --warm: #FFF3E0;
+    --rose: #E91E8C;
+    --turmeric: #FFB300;
+    --cream: #FFFBF5;
+    --deep: #4A1A02;
+    --chai: #8D4E17;
+    --green: #2E7D32;
+    --soft-rose: #FCE4EC;
   }
 
   body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--white);
+    font-family: 'Poppins', sans-serif;
+    background: var(--cream);
     overflow-x: hidden;
     cursor: none;
   }
 
-  /* Custom cursor */
   .cursor {
-    width: 20px; height: 20px;
-    background: var(--pink);
+    width: 18px; height: 18px;
+    background: var(--rose);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
     mix-blend-mode: multiply;
+    transition: transform 0.08s ease;
   }
 
-  /* Confetti canvas */
   #confetti-canvas {
     position: fixed;
     top: 0; left: 0;
@@ -51,26 +52,44 @@
   /* ===== HERO ===== */
   .hero {
     min-height: 100vh;
-    background: linear-gradient(135deg, #FFE0F0 0%, #FFF4CC 40%, #D4F5E9 70%, #E8D5FF 100%);
+    background: 
+      radial-gradient(ellipse at 10% 20%, rgba(255,107,43,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(233,30,140,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(245,166,35,0.1) 0%, transparent 70%),
+      linear-gradient(160deg, #FFF8F0 0%, #FFF0F5 50%, #FFF8E1 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    padding: 40px 20px;
+    padding: 60px 20px 100px;
   }
 
+  /* Rangoli-style decorative ring */
   .hero::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(255,110,180,0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(192,132,252,0.15) 0%, transparent 50%),
-                radial-gradient(circle at 60% 80%, rgba(107,207,176,0.15) 0%, transparent 50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 2px dashed rgba(245,166,35,0.25);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 40s linear infinite;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,107,43,0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 60s linear infinite reverse;
   }
 
-  /* Floating emojis background */
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
   .floaters {
     position: absolute;
     inset: 0;
@@ -80,80 +99,128 @@
 
   .floater {
     position: absolute;
-    font-size: clamp(1.2rem, 3vw, 2rem);
     animation: floatUp linear infinite;
-    opacity: 0.6;
+    opacity: 0.55;
   }
 
   @keyframes floatUp {
     0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
+    10% { opacity: 0.55; }
+    90% { opacity: 0.55; }
     100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
   }
 
-  .badge {
-    background: var(--yellow);
-    color: #5a3e00;
-    font-weight: 800;
-    font-size: 0.85rem;
-    padding: 6px 18px;
+  .top-tag {
+    background: linear-gradient(135deg, var(--saffron), var(--rose));
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 7px 22px;
     border-radius: 50px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 24px;
-    box-shadow: 3px 3px 0 #e6c400;
+    margin-bottom: 28px;
+    box-shadow: 3px 3px 0 rgba(233,30,140,0.4), 0 10px 30px rgba(255,107,43,0.3);
     animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
   }
 
   .hero-title {
-    font-family: 'Pacifico', cursive;
-    font-size: clamp(3rem, 10vw, 7rem);
-    color: var(--pink);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    color: var(--chai);
     text-align: center;
     line-height: 1.1;
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     animation: popIn 0.7s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
-    text-shadow: 4px 4px 0 #ff3d9a, 8px 8px 0 rgba(255,61,154,0.2);
+    letter-spacing: -1px;
   }
 
   .hero-name {
-    font-family: 'Pacifico', cursive;
-    font-size: clamp(3.5rem, 12vw, 8rem);
-    background: linear-gradient(135deg, var(--purple), var(--pink), var(--coral));
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 14vw, 9rem);
+    font-weight: 900;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--saffron) 0%, var(--rose) 50%, var(--gold) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: center;
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     animation: popIn 0.7s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
-    filter: drop-shadow(3px 3px 0 rgba(192,132,252,0.4));
+    filter: drop-shadow(3px 3px 0 rgba(255,107,43,0.2));
+    line-height: 1;
+    margin: 10px 0;
   }
 
-  .nickname {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    color: var(--mint);
-    font-weight: 800;
+  .subtitle {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--chai);
+    font-weight: 600;
     text-align: center;
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     animation: popIn 0.7s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+    opacity: 0.85;
   }
 
-  .nickname span {
-    color: var(--coral);
+  .subtitle span { color: var(--rose); font-weight: 800; }
+
+  .roles-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 28px;
+    position: relative; z-index: 1;
+    animation: popIn 0.7s 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    max-width: 700px;
   }
+
+  .role-pill {
+    background: white;
+    border: 2px solid;
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 2px 2px 0 currentColor;
+    transition: transform 0.2s ease;
+  }
+  .role-pill:hover { transform: translateY(-3px) rotate(-1deg); }
+  .role-pill.r1 { color: var(--saffron); border-color: var(--saffron); }
+  .role-pill.r2 { color: var(--rose); border-color: var(--rose); }
+  .role-pill.r3 { color: var(--green); border-color: var(--green); }
+  .role-pill.r4 { color: var(--chai); border-color: var(--chai); }
+  .role-pill.r5 { color: var(--gold); border-color: var(--gold); }
+  .role-pill.r6 { color: var(--rose); border-color: var(--rose); }
+
+  .sparkle-btn {
+    margin-top: 40px;
+    background: linear-gradient(135deg, var(--saffron), var(--rose));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 16px 42px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #b01060, 0 10px 30px rgba(255,107,43,0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative; z-index: 1;
+    animation: popIn 0.7s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .sparkle-btn:hover { transform: translateY(-4px); box-shadow: 6px 8px 0 #b01060, 0 15px 40px rgba(255,107,43,0.5); }
+  .sparkle-btn:active { transform: translateY(0); box-shadow: 2px 2px 0 #b01060; }
 
   .scroll-hint {
     position: absolute;
-    bottom: 30px;
-    left: 50%;
+    bottom: 30px; left: 50%;
     transform: translateX(-50%);
-    font-size: 2rem;
+    font-size: 1.8rem;
     animation: bounce 1.5s infinite;
     z-index: 1;
   }
@@ -170,137 +237,176 @@
 
   /* ===== MESSAGE SECTION ===== */
   .message-section {
-    background: linear-gradient(135deg, #fff0f8, #fffde7, #f0fff8);
-    padding: 80px 20px;
+    background: linear-gradient(160deg, #FFF8F0, #FFF0F5 50%, #FFFDE7);
+    padding: 90px 20px;
     position: relative;
   }
 
   .message-section::before {
     content: '💌';
-    font-size: 4rem;
+    font-size: 3.5rem;
     display: block;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     animation: wiggle 2s infinite;
   }
 
   @keyframes wiggle {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
   }
 
   .message-card {
-    max-width: 750px;
+    max-width: 780px;
     margin: 0 auto;
     background: white;
-    border-radius: 32px;
-    padding: 50px 40px;
-    box-shadow: 0 20px 60px rgba(255,110,180,0.15), 0 0 0 4px var(--pink), 6px 6px 0 var(--yellow);
+    border-radius: 28px;
+    padding: 56px 48px;
+    box-shadow:
+      0 30px 80px rgba(255,107,43,0.12),
+      0 0 0 3px var(--saffron),
+      7px 7px 0 var(--rose);
     position: relative;
   }
 
-  .message-card::before {
-    content: '✨';
-    position: absolute;
-    top: -20px; left: 30px;
-    font-size: 2.5rem;
-  }
-  .message-card::after {
-    content: '🎀';
-    position: absolute;
-    top: -20px; right: 30px;
-    font-size: 2.5rem;
-  }
+  .message-card::before { content: '✨'; position: absolute; top: -18px; left: 28px; font-size: 2.2rem; }
+  .message-card::after { content: '🌸'; position: absolute; top: -18px; right: 28px; font-size: 2.2rem; }
 
   .message-label {
-    font-family: 'Pacifico', cursive;
-    color: var(--purple);
-    font-size: 1.3rem;
-    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--saffron);
+    font-size: 1.25rem;
+    margin-bottom: 28px;
     display: block;
+    border-bottom: 2px dashed rgba(255,107,43,0.2);
+    padding-bottom: 18px;
   }
 
   .message-text {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    line-height: 1.9;
-    color: #444;
-    font-weight: 600;
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    line-height: 2;
+    color: #3d2010;
+    font-weight: 500;
   }
 
-  .message-text .highlight {
-    background: linear-gradient(120deg, #FFD93D 0%, #FFD93D 100%);
+  .hi { color: var(--rose); font-weight: 700; }
+  .hl { 
+    background: linear-gradient(120deg, var(--turmeric) 0%, var(--turmeric) 100%);
     background-repeat: no-repeat;
-    background-size: 100% 40%;
-    background-position: 0 80%;
-    padding: 0 4px;
+    background-size: 100% 38%;
+    background-position: 0 82%;
+    padding: 0 3px;
     font-weight: 800;
-    color: #5a3e00;
+    color: var(--deep);
   }
+  .gr { color: var(--green); font-weight: 700; }
+  .sa { color: var(--saffron); font-weight: 700; }
 
-  .message-text .pink { color: var(--pink); font-weight: 800; }
-  .message-text .purple { color: var(--purple); font-weight: 800; }
-  .message-text .mint { color: var(--mint); font-weight: 800; }
+  .sarcasm {
+    display: inline-block;
+    background: #FFF3E0;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 2px 10px;
+    font-size: 0.9em;
+    color: var(--chai);
+    font-weight: 700;
+    margin: 0 2px;
+  }
 
   .sign-off {
-    margin-top: 30px;
-    font-family: 'Pacifico', cursive;
-    font-size: 1.4rem;
-    color: var(--pink);
+    margin-top: 36px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--rose);
     text-align: right;
+    padding-top: 20px;
+    border-top: 2px dashed rgba(233,30,140,0.2);
   }
 
-  /* ===== VIDEO SECTION ===== */
+  /* ===== CHAI HIGHLIGHT SECTION ===== */
+  .chai-section {
+    background: linear-gradient(135deg, #3E1F00, #6D3A0A, #3E1F00);
+    padding: 70px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chai-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.02) 30px,
+      rgba(255,255,255,0.02) 31px
+    );
+  }
+
+  .chai-emoji { font-size: 5rem; animation: cakePulse 2s infinite; margin-bottom: 16px; position: relative; }
+  @keyframes cakePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08) rotate(3deg)} }
+
+  .chai-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--gold);
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .chai-quote {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .chai-quote em {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* ===== AUDIO ===== */
   .video-section {
-    background: linear-gradient(135deg, #e8d5ff, #d4f5e9, #ffe0f0);
+    background: linear-gradient(160deg, #FFF0F5, #FFF8F0, #F3E5F5);
     padding: 80px 20px;
     text-align: center;
   }
 
   .section-title {
-    font-family: 'Pacifico', cursive;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    color: var(--purple);
-    margin-bottom: 12px;
-    text-shadow: 3px 3px 0 rgba(192,132,252,0.3);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    color: var(--deep);
+    margin-bottom: 10px;
   }
 
   .section-subtitle {
-    color: #888;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 40px;
+    color: #888; font-size: 1rem; font-weight: 600; margin-bottom: 40px;
   }
 
-  .video-wrapper {
-    max-width: 800px;
-    width: 100%;
+  .audio-player {
+    max-width: 420px;
+    width: 90%;
     margin: 0 auto;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(192,132,252,0.3), 0 0 0 5px var(--purple), 8px 8px 0 var(--pink);
-    position: relative;
-    padding-top: 56.25%;
+    background: white;
+    border-radius: 28px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 60px rgba(255,107,43,0.15), 0 0 0 3px var(--saffron), 6px 6px 0 var(--rose);
+    text-align: center;
   }
 
-  .video-wrapper iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    border: none;
-  }
-
-  @media (max-width: 480px) {
-    .video-wrapper {
-      border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(192,132,252,0.3), 0 0 0 3px var(--purple), 4px 4px 0 var(--pink);
-    }
-  }
-
-  /* ===== WISH SECTION ===== */
+  /* ===== WISHES ===== */
   .wish-section {
-    background: linear-gradient(135deg, #FFF4CC, #FFE0F0, #D4F5E9);
+    background: linear-gradient(160deg, #FFF8E1, #FFF0F5, #F1F8E9);
     padding: 80px 20px;
     text-align: center;
   }
@@ -310,114 +416,52 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    max-width: 900px;
+    max-width: 920px;
     margin: 40px auto 0;
   }
 
   .wish-card {
     background: white;
-    border-radius: 20px;
-    padding: 30px 25px;
+    border-radius: 22px;
+    padding: 32px 24px;
     flex: 1 1 200px;
     max-width: 260px;
-    box-shadow: 4px 4px 0 var(--pink);
-    border: 3px solid var(--pink);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .wish-card:nth-child(2) { border-color: var(--purple); box-shadow: 4px 4px 0 var(--purple); }
-  .wish-card:nth-child(3) { border-color: var(--mint); box-shadow: 4px 4px 0 var(--mint); }
-  .wish-card:nth-child(4) { border-color: var(--yellow); box-shadow: 4px 4px 0 var(--coral); border-color: var(--coral); }
+  .wish-card:nth-child(1) { border: 3px solid var(--saffron); box-shadow: 4px 4px 0 var(--saffron); }
+  .wish-card:nth-child(2) { border: 3px solid var(--rose); box-shadow: 4px 4px 0 var(--rose); }
+  .wish-card:nth-child(3) { border: 3px solid var(--green); box-shadow: 4px 4px 0 var(--green); }
+  .wish-card:nth-child(4) { border: 3px solid var(--gold); box-shadow: 4px 4px 0 var(--gold); }
+  .wish-card:nth-child(5) { border: 3px solid var(--chai); box-shadow: 4px 4px 0 var(--chai); }
 
-  .wish-card:hover {
-    transform: translateY(-8px) rotate(1deg);
-    box-shadow: 8px 8px 0 var(--pink);
-  }
+  .wish-card:hover { transform: translateY(-8px) rotate(1deg); }
+  .wish-icon { font-size: 2.8rem; margin-bottom: 12px; }
+  .wish-title { font-weight: 800; font-size: 1.05rem; color: #333; margin-bottom: 8px; }
+  .wish-desc { color: #777; font-size: 0.88rem; line-height: 1.65; }
 
-  .wish-icon { font-size: 3rem; margin-bottom: 12px; }
-  .wish-title { font-weight: 800; font-size: 1.1rem; color: #333; margin-bottom: 8px; }
-  .wish-desc { color: #777; font-size: 0.9rem; line-height: 1.6; }
-
-  /* ===== FOOTER ===== */
   footer {
-    background: #2d2d2d;
+    background: var(--deep);
     color: white;
     text-align: center;
-    padding: 40px 20px;
-    font-family: 'Pacifico', cursive;
+    padding: 50px 20px;
   }
 
-  footer p { font-family: 'Nunito', sans-serif; font-size: 0.9rem; margin-top: 10px; color: #aaa; }
-
-  /* ===== CAKE ANIMATION ===== */
-  .cake-container {
-    font-size: 5rem;
-    text-align: center;
-    margin: 30px 0;
-    animation: cakePulse 1.5s ease-in-out infinite;
+  footer .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 12px;
   }
 
-  @keyframes cakePulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1) rotate(3deg); }
-  }
-
-  /* Balloons */
-  .balloons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 40px 0 20px;
-    flex-wrap: wrap;
-  }
-
-  .balloon {
-    font-size: clamp(3rem, 8vw, 5rem);
-    animation: balFloat 3s ease-in-out infinite;
-  }
-
-  .balloon:nth-child(2) { animation-delay: 0.4s; }
-  .balloon:nth-child(3) { animation-delay: 0.8s; }
-  .balloon:nth-child(4) { animation-delay: 1.2s; }
-
-  @keyframes balFloat {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-  }
-
-  /* Sparkle button */
-  .sparkle-btn {
-    margin-top: 50px;
-    background: linear-gradient(135deg, var(--pink), var(--purple));
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 18px 45px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 4px 4px 0 #9333ea, 0 10px 30px rgba(255,110,180,0.4);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-  }
-
-  .sparkle-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 6px 8px 0 #9333ea, 0 15px 40px rgba(255,110,180,0.5);
-  }
-
-  .sparkle-btn:active {
-    transform: translateY(0);
-    box-shadow: 2px 2px 0 #9333ea;
-  }
+  footer p { font-size: 0.9rem; color: rgba(255,255,255,0.55); }
 
   @media (max-width: 600px) {
-    .message-card { padding: 35px 25px; }
+    .message-card { padding: 32px 22px; }
     .wishes-grid { flex-direction: column; align-items: center; }
     .wish-card { max-width: 100%; }
+    .roles-row { gap: 8px; }
   }
 </style>
 </head>
@@ -430,128 +474,142 @@
 <section class="hero">
   <div class="floaters" id="floaters"></div>
 
-  <div class="badge">🎂 Special Day Alert 🎂</div>
+  <div class="top-tag">🌸 Today Is Her Day 🌸</div>
   <div class="hero-title">Happy Birthday</div>
-  <div class="hero-name">Nikki (Don)</div>
-  <div class="nickname">aka <span>The Most Precious Gift</span> 🎁</div>
+  <div class="hero-name">Ma</div>
+  <div class="subtitle">The <span>heart & soul</span> of our entire universe 💛</div>
 
-  <div class="balloons">
-    <span class="balloon">🎈</span>
-    <span class="balloon">🎉</span>
-    <span class="balloon">🎊</span>
-    <span class="balloon">🎈</span>
+  <div class="roles-row">
+    <div class="role-pill r1">💍 Best Wife</div>
+    <div class="role-pill r2">👩‍👧 Best Daughter</div>
+    <div class="role-pill r3">🏡 Best Bahu</div>
+    <div class="role-pill r4">🤗 Best Bua</div>
+    <div class="role-pill r5">💛 Best Mami</div>
+    <div class="role-pill r6">👑 MOM</div>
   </div>
 
-  <button class="sparkle-btn" onclick="launchConfetti()">🎉 Celebrate! Click me!</button>
-
+  <button class="sparkle-btn" onclick="launchConfetti()">🎉 Celebrate Ma! Click me!</button>
   <div class="scroll-hint">👇</div>
 </section>
 
 <!-- MESSAGE -->
 <section class="message-section">
   <div class="message-card">
-    <span class="message-label">A message straight from the heart 💝</span>
+    <span class="message-label">A letter straight from the heart — with a little bit of 😂</span>
     <p class="message-text">
-      First of all, <span class="highlight">thanks to aunty who gave you birth</span> — because you came into my life and it just feels... 
-      <span class="pink">magical</span>. ✨<br><br>
-      I feel like I have my <span class="highlight">birthday every single day</span> — since I talk to you, laugh with you, share every single thing with you. 
-      Every day feels like a celebration because <span class="purple">you are my present</span>. 🎁<br><br>
-      <span class="mint">Enjoy THIS day, my love.</span> May God bless you with everything you deserve — and land you that dream job at 
-      <span class="highlight">Tower Research</span> (that <span class="pink">₹1 Cr package, ladli!</span> 👑💼) — because you deserve nothing less than the absolute best. 🚀<br><br>
-      You are my every day. My laugh. My everything. 💕
+      <span class="hl">Thanks Ma</span> — because every single thing I am today, every bit of strength, every laugh, every value I carry... it all traces back to you. You didn't just raise us — you <span class="hi">became our whole world</span> without even realizing it. There's no bond quite like a mother and her sons, and we are the luckiest boys alive to call you ours. 💐<br><br>
+
+      You're not just a good wife, daughter, or bahu — you're the <span class="sa">best Bua</span>, the <span class="sa">best Mami</span>... and above all, you are <span class="hl">Kabir aur Arjun ki pyaari Mumma</span> — and that title alone says everything. 👑<br><br>
+
+      But most importantly — and this needs a <em>special award</em> — you are officially the <span class="hl">🏆 Employee of the Month</span> of our kitchen. Every. Single. Month. No contest.<br><br>
+
+      <span class="gr">Aapki haath ki kadak chai...</span> <em>waahh</em>... abhi toh bas soch ke hi maan kar rha hai chai peene ka. 
+      <span class="sarcasm">😂 haan haan, bilkul aisi hi chai banani thi</span><br><br>
+
+      <span class="hi">Par jokes apart, Ma —</span> you are genuinely the <span class="hl">most hardworking person</span> I know. <span class="gr">Nanu and Dadu would be so, so proud of you.</span> 🙏<br><br>
+
+      You are the <span class="hl">backbone of our kitchen</span> — and let's be real, the backbone of this whole family. Socho agar aap na ho... <span class="sarcasm">toh onion aur lasan kaun katega? 😭</span> We'd be completely lost. Literally.<br><br>
+
+      Aur honestly? <span class="hl">Hum bohot blessed hain ki aap hamaari Mummy hain</span> — warna <span class="hi">haramko khud kitchen mein aake sehna padta</span> — <span class="sarcasm">"namak zyada hai 🧂", "press kar de 👔", "mere liye chai nahi banayi ☕"</span> 😂😭 <span class="sarcasm">😂 sorry Papa, but you know it's true</span><br><br>
+
+      You hold everything together with love, with your kadak chai, and with your legendary cooking. We are so lucky to have you. <span class="hi">Happy Birthday, Ma ❤️</span><br><br>
+
+      Aur Ma — ek last baat — <span class="hl">aapki wajah se ab hamaari aankhon ne rona hi chhod diya.</span> 😭 Itna onion-lasan katwaaya hai aapne ki aankhein bol rahi hain — <span class="sarcasm">"bhai hum retire ho gaye, ab khud ro lo."</span> 😂<br>
+      Sach mein socho — jab rona hota hai toh aankhein khud soch rahi hoti hain <span class="sarcasm">— "yaar mere aassu kyon nahi nikal rahe?? Ma ne toh sab nikaaal liye the onion ke saath!" 🧅😭😂</span>
     </p>
-    <div class="sign-off">— Your biggest fan 🌟</div>
+    <div class="sign-off">— Kabir &amp; Arjun (aur poora ghar) 🌸</div>
   </div>
 </section>
 
-<!-- AUDIO PLAYER -->
+<!-- CHAI SPECIAL SECTION -->
+<section class="chai-section">
+  <div class="chai-emoji">☕</div>
+  <div class="chai-title">Official Chai Rating: 10/10 ⭐</div>
+  <p class="chai-quote">
+    Aapki kadak chai ke baad <em>koi bhi chai chai nahi lagti.</em><br>
+    <em>"Best chai in the world"</em> — certified by Kabir, Arjun, aur baaki sab 😂<br><br>
+    <em>onion-lasan itna kaata hai ki ab hamari aankhein bhi chai ki tarah kadak ho gayi hogi.</em> 🧅🧄😂
+  </p>
+</section>
+
+<!-- AUDIO SECTION -->
 <section class="video-section">
-  <div class="section-title">🎵 This one's for you!</div>
-  <p class="section-subtitle">Sit back, relax & enjoy your special song 🎶</p>
+  <div class="section-title">🎵 A Song Just for You, Ma</div>
+  <p class="section-subtitle">Sit back & enjoy your special day 🎶</p>
 
-  <div class="cake-container">🎂</div>
+  <div class="chai-emoji" style="font-size:4rem;margin:20px 0;">🎂</div>
 
-  <!-- Custom Audio Player UI -->
-  <div id="audioPlayer" style="
-    max-width: 420px;
-    width: 90%;
-    margin: 0 auto;
-    background: white;
-    border-radius: 28px;
-    padding: 30px 28px;
-    box-shadow: 0 20px 60px rgba(192,132,252,0.2), 0 0 0 4px var(--purple), 6px 6px 0 var(--pink);
-    text-align: center;
-  ">
-    <div style="font-size:3.5rem; margin-bottom:10px;" id="musicNote">🎶</div>
-    <div style="font-family:'Pacifico',cursive; font-size:1.1rem; color:var(--purple); margin-bottom:4px;">Playing for Nikki 💕</div>
-    <div style="font-size:0.85rem; color:#aaa; font-weight:600; margin-bottom:24px;" id="songStatus">⏳ Tap ▶️ to start the song</div>
+  <div class="audio-player" id="audioPlayer">
+    <div style="font-size:3rem;margin-bottom:10px;">🎵</div>
+    <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--saffron);margin-bottom:4px;">Playing for Ma 💛</div>
+    <div style="font-size:0.83rem;color:#aaa;font-weight:600;margin-bottom:22px;" id="songStatus">⏳ Tap ▶️ to start</div>
 
-    <!-- Progress Bar -->
-    <div style="background:#f0e6ff; border-radius:50px; height:8px; margin-bottom:20px; overflow:hidden;">
-      <div id="progressBar" style="height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--purple)); border-radius:50px; transition:width 0.5s linear;"></div>
+    <div style="background:#FFF3E0;border-radius:50px;height:8px;margin-bottom:20px;overflow:hidden;">
+      <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--saffron),var(--rose));border-radius:50px;transition:width 0.5s linear;"></div>
     </div>
 
-    <!-- Controls -->
-    <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
-      <button onclick="seekBack()" style="background:none;border:none;font-size:1.6rem;cursor:pointer;" title="Rewind 10s">⏪</button>
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+      <button onclick="seekBack()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;" title="Rewind 10s">⏪</button>
       <button id="playPauseBtn" onclick="toggleAudio()" style="
-        width:64px; height:64px; border-radius:50%;
-        background:linear-gradient(135deg,var(--pink),var(--purple));
-        border:none; font-size:1.8rem; cursor:pointer;
-        box-shadow:4px 4px 0 #9333ea;
+        width:64px;height:64px;border-radius:50%;
+        background:linear-gradient(135deg,var(--saffron),var(--rose));
+        border:none;font-size:1.8rem;cursor:pointer;
+        box-shadow:4px 4px 0 #b01060;
+        display:flex;align-items:center;justify-content:center;
         transition:transform 0.15s ease;
-        display:flex; align-items:center; justify-content:center;
       ">▶️</button>
-      <button onclick="seekForward()" style="background:none;border:none;font-size:1.6rem;cursor:pointer;" title="Forward 10s">⏩</button>
+      <button onclick="seekForward()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;" title="Forward 10s">⏩</button>
     </div>
 
-    <!-- Volume -->
-    <div style="display:flex; align-items:center; gap:10px; margin-top:20px; justify-content:center;">
-      <span style="font-size:1.2rem;">🔈</span>
-      <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="setVolume(this.value)" style="
-        width:120px; accent-color:var(--pink); cursor:pointer;
-      ">
-      <span style="font-size:1.2rem;">🔊</span>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:20px;justify-content:center;">
+      <span style="font-size:1.1rem;">🔈</span>
+      <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="setVolume(this.value)"
+        style="width:120px;accent-color:var(--saffron);cursor:pointer;">
+      <span style="font-size:1.1rem;">🔊</span>
     </div>
   </div>
 
-  <!-- Hidden YouTube player for audio -->
   <div id="audioYT" style="position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;"></div>
 </section>
 
 <!-- WISHES -->
 <section class="wish-section">
-  <div class="section-title">Wishing you...</div>
-  <p class="section-subtitle">Because you deserve ALL of this and more 💫</p>
+  <div class="section-title" style="font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.2rem);color:var(--deep);margin-bottom:10px;">Wishing You, Ma...</div>
+  <p class="section-subtitle">Because you deserve all of this and so much more 🌸</p>
 
   <div class="wishes-grid">
     <div class="wish-card">
-      <div class="wish-icon">💼</div>
-      <div class="wish-title">Dream Job</div>
-      <div class="wish-desc">Tower Research calling — ₹1 Cr package is just the beginning for you!</div>
+      <div class="wish-icon">❤️</div>
+      <div class="wish-title">Health & Happiness</div>
+      <div class="wish-desc">May you always be healthy, happy, and surrounded by love — just like you surround us.</div>
     </div>
     <div class="wish-card">
-      <div class="wish-icon">🌈</div>
-      <div class="wish-title">Endless Joy</div>
-      <div class="wish-desc">Every day as bright and beautiful as your smile.</div>
+      <div class="wish-icon">☕</div>
+      <div class="wish-title">Kadak Chai Always</div>
+      <div class="wish-desc">May you always have a perfect cup of chai — and someone to drink it peacefully without interruptions! 😄</div>
+    </div>
+    <div class="wish-card">
+      <div class="wish-icon">🌸</div>
+      <div class="wish-title">Rest & Peace</div>
+      <div class="wish-desc">You do so much for everyone. Today, may YOU be pampered like the queen you are.</div>
     </div>
     <div class="wish-card">
       <div class="wish-icon">💪</div>
-      <div class="wish-title">Strength & Success</div>
-      <div class="wish-desc">May you conquer everything you set your heart to.</div>
+      <div class="wish-title">Strength Always</div>
+      <div class="wish-desc">You are the backbone — may you always feel our love and support holding you up too.</div>
     </div>
     <div class="wish-card">
-      <div class="wish-icon">💕</div>
-      <div class="wish-title">Love Always</div>
-      <div class="wish-desc">Someone who loves you more than words can say — every single day.</div>
+      <div class="wish-icon">👑</div>
+      <div class="wish-title">Pride of All</div>
+      <div class="wish-desc">Nanu, Dadu, all of us — so incredibly proud of the extraordinary woman you are. 🙏</div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div style="font-size:2.5rem; margin-bottom:10px;">🎀 Happy Birthday Nikki (Don) 🎀</div>
-  <p>Made with 💖 just for you · Because every day with you is a birthday</p>
+  <div class="footer-title">🎀 Happy Birthday, Ma 🎀</div>
+  <p>Made with all the love in the world · Because you deserve every bit of it ❤️</p>
 </footer>
 
 <script>
@@ -563,16 +621,16 @@
   });
 
   // Floating emojis
-  const emojis = ['🎉','🎊','🎈','💕','⭐','✨','🌸','🎀','💝','🌈','🦋','💫'];
+  const emojis = ['🌸','💛','☕','🎉','💕','✨','🌷','🎀','💝','🌼','🦋','💫','❤️','🎊'];
   const floatersEl = document.getElementById('floaters');
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 20; i++) {
     const el = document.createElement('div');
     el.className = 'floater';
     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     el.style.left = Math.random() * 100 + '%';
-    el.style.animationDuration = (6 + Math.random() * 8) + 's';
-    el.style.animationDelay = (Math.random() * 8) + 's';
-    el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    el.style.animationDuration = (7 + Math.random() * 9) + 's';
+    el.style.animationDelay = (Math.random() * 9) + 's';
+    el.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
     floatersEl.appendChild(el);
   }
 
@@ -581,28 +639,19 @@
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-  let confettiPieces = [];
-  let animating = false;
+  let confettiPieces = [], animating = false;
 
   function launchConfetti() {
     confettiPieces = [];
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 220; i++) {
       confettiPieces.push({
-        x: Math.random() * canvas.width,
-        y: -10,
-        w: 8 + Math.random() * 10,
-        h: 5 + Math.random() * 6,
-        color: ['#FF6EB4','#FFD93D','#6BCFB0','#C084FC','#FF8C69','#60C7F5'][Math.floor(Math.random()*6)],
-        angle: Math.random() * 360,
-        spin: (Math.random() - 0.5) * 6,
-        vx: (Math.random() - 0.5) * 6,
-        vy: 2 + Math.random() * 5,
-        alpha: 1
+        x: Math.random() * canvas.width, y: -10,
+        w: 8 + Math.random() * 10, h: 5 + Math.random() * 6,
+        color: ['#FF6B2B','#F5A623','#E91E8C','#FFB300','#2E7D32','#FF8A65'][Math.floor(Math.random()*6)],
+        angle: Math.random() * 360, spin: (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 6, vy: 2 + Math.random() * 5, alpha: 1
       });
     }
     if (!animating) animateConfetti();
@@ -615,31 +664,20 @@
     confettiPieces.forEach(p => {
       p.x += p.vx; p.y += p.vy; p.angle += p.spin;
       if (p.y > canvas.height * 0.85) p.alpha -= 0.02;
-      ctx.save();
-      ctx.globalAlpha = p.alpha;
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.angle * Math.PI / 180);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.save(); ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y); ctx.rotate(p.angle * Math.PI / 180);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
       ctx.restore();
     });
     if (confettiPieces.length > 0) requestAnimationFrame(animateConfetti);
     else { animating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }
   }
 
-  // Auto-launch on load
   setTimeout(launchConfetti, 800);
-</script>
-</body>
-</html>
 
+  // YouTube audio
+  var audioPlayer, audioReady = false, audioPlaying = false, progressInterval;
 
-
-<script>
-  var audioPlayer, audioReady = false, audioPlaying = false;
-  var progressInterval;
-
-  // Load YouTube IFrame API
   var ytTag = document.createElement('script');
   ytTag.src = "https://www.youtube.com/iframe_api";
   document.head.appendChild(ytTag);
@@ -652,21 +690,13 @@
         onReady: function(e) {
           audioReady = true;
           e.target.setVolume(70);
-          // Try autoplay immediately
           e.target.playVideo();
           audioPlaying = true;
           document.getElementById('playPauseBtn').textContent = '⏸️';
           document.getElementById('songStatus').textContent = '♪ Now Playing...';
           startProgress();
-          // Fallback for browsers that block autoplay — start on first touch/click
           function startOnInteract() {
-            if (audioReady) {
-              e.target.playVideo();
-              audioPlaying = true;
-              document.getElementById('playPauseBtn').textContent = '⏸️';
-              document.getElementById('songStatus').textContent = '♪ Now Playing...';
-              startProgress();
-            }
+            if (audioReady) { e.target.playVideo(); audioPlaying = true; document.getElementById('playPauseBtn').textContent = '⏸️'; document.getElementById('songStatus').textContent = '♪ Now Playing...'; startProgress(); }
             document.removeEventListener('click', startOnInteract);
             document.removeEventListener('touchstart', startOnInteract);
           }
@@ -675,58 +705,27 @@
         },
         onStateChange: function(e) {
           if (e.data === YT.PlayerState.PLAYING) {
-            audioPlaying = true;
-            document.getElementById('playPauseBtn').textContent = '⏸️';
-            document.getElementById('songStatus').textContent = '♪ Now Playing...';
-            startProgress();
+            audioPlaying = true; document.getElementById('playPauseBtn').textContent = '⏸️'; document.getElementById('songStatus').textContent = '♪ Now Playing...'; startProgress();
           } else if (e.data === YT.PlayerState.PAUSED) {
-            audioPlaying = false;
-            document.getElementById('playPauseBtn').textContent = '▶️';
-            document.getElementById('songStatus').textContent = 'Paused';
-            clearInterval(progressInterval);
+            audioPlaying = false; document.getElementById('playPauseBtn').textContent = '▶️'; document.getElementById('songStatus').textContent = 'Paused'; clearInterval(progressInterval);
           }
         }
       }
     });
   }
 
-  function toggleAudio() {
-    if (!audioReady) return;
-    if (audioPlaying) {
-      audioPlayer.pauseVideo();
-    } else {
-      audioPlayer.playVideo();
-    }
-  }
-
-  function seekBack() {
-    if (!audioReady) return;
-    audioPlayer.seekTo(Math.max(0, audioPlayer.getCurrentTime() - 10), true);
-  }
-
-  function seekForward() {
-    if (!audioReady) return;
-    audioPlayer.seekTo(audioPlayer.getCurrentTime() + 10, true);
-  }
-
-  function setVolume(val) {
-    if (!audioReady) return;
-    audioPlayer.setVolume(parseInt(val));
-  }
-
+  function toggleAudio() { if (!audioReady) return; audioPlaying ? audioPlayer.pauseVideo() : audioPlayer.playVideo(); }
+  function seekBack() { if (!audioReady) return; audioPlayer.seekTo(Math.max(0, audioPlayer.getCurrentTime() - 10), true); }
+  function seekForward() { if (!audioReady) return; audioPlayer.seekTo(audioPlayer.getCurrentTime() + 10, true); }
+  function setVolume(val) { if (!audioReady) return; audioPlayer.setVolume(parseInt(val)); }
   function startProgress() {
     clearInterval(progressInterval);
     progressInterval = setInterval(function() {
       if (!audioReady) return;
-      var duration = audioPlayer.getDuration();
-      var current = audioPlayer.getCurrentTime();
-      if (duration > 0) {
-        document.getElementById('progressBar').style.width = ((current / duration) * 100) + '%';
-      }
+      var d = audioPlayer.getDuration(), c = audioPlayer.getCurrentTime();
+      if (d > 0) document.getElementById('progressBar').style.width = ((c / d) * 100) + '%';
     }, 500);
   }
-
-  
 </script>
 </body>
 </html>
