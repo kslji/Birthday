@@ -539,37 +539,41 @@
 
   <div class="chai-emoji" style="font-size:4rem;margin:20px 0;">🎂</div>
 
+  <!-- Actual YouTube iframe - autoplay muted, styled to be tiny but functional -->
+  <div style="width:1px;height:1px;overflow:hidden;position:absolute;">
+    <iframe id="ytFrame"
+      src="https://www.youtube.com/embed/YCNp7qfdYMQ?autoplay=1&mute=1&start=13&loop=1&playlist=YCNp7qfdYMQ&controls=0&playsinline=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      style="width:1px;height:1px;border:none;">
+    </iframe>
+  </div>
+
   <div class="audio-player" id="audioPlayer">
     <div style="font-size:3rem;margin-bottom:10px;">🎵</div>
     <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--saffron);margin-bottom:4px;">Playing for Ma 💛</div>
-    <div style="font-size:0.83rem;color:#aaa;font-weight:600;margin-bottom:22px;" id="songStatus">⏳ Tap ▶️ to start</div>
+    <div style="font-size:0.83rem;color:#aaa;font-weight:600;margin-bottom:22px;" id="songStatus">🔇 Tap 🔊 to unmute the music!</div>
 
-    <div style="background:#FFF3E0;border-radius:50px;height:8px;margin-bottom:20px;overflow:hidden;">
-      <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--saffron),var(--rose));border-radius:50px;transition:width 0.5s linear;"></div>
-    </div>
-
-    <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
-      <button onclick="seekBack()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;" title="Rewind 10s">⏪</button>
-      <button id="playPauseBtn" onclick="toggleAudio()" style="
-        width:64px;height:64px;border-radius:50%;
+    <!-- Unmute big button -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:20px;">
+      <button id="unmuteBtn" onclick="toggleMute()" style="
         background:linear-gradient(135deg,var(--saffron),var(--rose));
-        border:none;font-size:1.8rem;cursor:pointer;
+        color:white; border:none; border-radius:50px;
+        padding:14px 32px; font-size:1rem; font-weight:700;
+        cursor:pointer; font-family:'Poppins',sans-serif;
         box-shadow:4px 4px 0 #b01060;
-        display:flex;align-items:center;justify-content:center;
         transition:transform 0.15s ease;
-      ">▶️</button>
-      <button onclick="seekForward()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;" title="Forward 10s">⏩</button>
+      ">🔊 Tap to Hear Music!</button>
     </div>
 
-    <div style="display:flex;align-items:center;gap:10px;margin-top:20px;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:10px;margin-top:8px;justify-content:center;">
       <span style="font-size:1.1rem;">🔈</span>
-      <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="setVolume(this.value)"
-        style="width:120px;accent-color:var(--saffron);cursor:pointer;">
+      <input type="range" id="volumeSlider" min="0" max="100" value="80" oninput="changeVolume(this.value)"
+        style="width:140px;accent-color:var(--saffron);cursor:pointer;">
       <span style="font-size:1.1rem;">🔊</span>
     </div>
+    <div style="font-size:0.75rem;color:#bbb;margin-top:10px;">use volume slider to adjust 🎶</div>
   </div>
-
-  <div id="audioYT" style="position:fixed;top:-9999px;left:-9999px;width:200px;height:200px;visibility:hidden;"></div>
 </section>
 
 <!-- WISHES -->
@@ -675,96 +679,30 @@
 
   setTimeout(launchConfetti, 800);
 
-  // YouTube audio - autoplay on load
-  var audioPlayer, audioReady = false, audioPlaying = false, progressInterval;
-  var unmuteTriggered = false;
+  // Simple iframe volume control
+  var isMuted = true;
 
-  var ytTag = document.createElement('script');
-  ytTag.src = "https://www.youtube.com/iframe_api";
-  document.head.appendChild(ytTag);
-
-  function onYouTubeIframeAPIReady() {
-    audioPlayer = new YT.Player('audioYT', {
-      videoId: 'YCNp7qfdYMQ',
-      playerVars: {
-        autoplay: 1,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        start: 13,
-        mute: 1,
-        playsinline: 1
-      },
-      events: {
-        onReady: function(e) {
-          audioReady = true;
-          e.target.mute();
-          e.target.seekTo(13, true);
-          e.target.playVideo();
-          audioPlaying = true;
-          document.getElementById('playPauseBtn').textContent = '⏸️';
-          document.getElementById('songStatus').textContent = '🔇 Playing (tap anywhere to unmute)';
-          startProgress();
-
-          // Unmute on ANY first interaction
-          function doUnmute() {
-            if (unmuteTriggered) return;
-            unmuteTriggered = true;
-            e.target.unMute();
-            e.target.setVolume(70);
-            document.getElementById('songStatus').textContent = '♪ Now Playing...';
-            ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
-              document.removeEventListener(ev, doUnmute);
-            });
-          }
-          ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
-            document.addEventListener(ev, doUnmute, { once: true });
-          });
-
-          // Also try unmuting after 1s automatically
-          setTimeout(function() { doUnmute(); }, 1000);
-        },
-        onStateChange: function(e) {
-          if (e.data === YT.PlayerState.PLAYING) {
-            audioPlaying = true;
-            document.getElementById('playPauseBtn').textContent = '⏸️';
-            if (unmuteTriggered) document.getElementById('songStatus').textContent = '♪ Now Playing...';
-            startProgress();
-          } else if (e.data === YT.PlayerState.PAUSED) {
-            audioPlaying = false;
-            document.getElementById('playPauseBtn').textContent = '▶️';
-            document.getElementById('songStatus').textContent = 'Paused';
-            clearInterval(progressInterval);
-          } else if (e.data === YT.PlayerState.ENDED) {
-            e.target.seekTo(13, true);
-            e.target.playVideo();
-          }
-        }
-      }
-    });
-  }
-
-  function toggleAudio() {
-    if (!audioReady) return;
-    if (audioPlaying) {
-      audioPlayer.pauseVideo();
+  function toggleMute() {
+    var frame = document.getElementById('ytFrame');
+    if (isMuted) {
+      // Replace src with unmuted version - most reliable way
+      frame.src = "https://www.youtube.com/embed/YCNp7qfdYMQ?autoplay=1&mute=0&start=13&loop=1&playlist=YCNp7qfdYMQ&controls=0&playsinline=1";
+      isMuted = false;
+      document.getElementById('unmuteBtn').textContent = '🔇 Mute';
+      document.getElementById('unmuteBtn').style.background = 'linear-gradient(135deg,#888,#555)';
+      document.getElementById('songStatus').textContent = '♪ Now Playing... Happy Birthday Ma! 💛';
     } else {
-      audioPlayer.unMute();
-      audioPlayer.setVolume(parseInt(document.getElementById('volumeSlider').value));
-      audioPlayer.playVideo();
-      unmuteTriggered = true;
+      frame.src = "https://www.youtube.com/embed/YCNp7qfdYMQ?autoplay=1&mute=1&start=13&loop=1&playlist=YCNp7qfdYMQ&controls=0&playsinline=1";
+      isMuted = true;
+      document.getElementById('unmuteBtn').textContent = '🔊 Tap to Hear Music!';
+      document.getElementById('unmuteBtn').style.background = 'linear-gradient(135deg,var(--saffron),var(--rose))';
+      document.getElementById('songStatus').textContent = '🔇 Tap 🔊 to unmute the music!';
     }
   }
-  function seekBack() { if (!audioReady) return; audioPlayer.seekTo(Math.max(13, audioPlayer.getCurrentTime() - 10), true); }
-  function seekForward() { if (!audioReady) return; audioPlayer.seekTo(audioPlayer.getCurrentTime() + 10, true); }
-  function setVolume(val) { if (!audioReady) return; audioPlayer.unMute(); audioPlayer.setVolume(parseInt(val)); unmuteTriggered = true; }
-  function startProgress() {
-    clearInterval(progressInterval);
-    progressInterval = setInterval(function() {
-      if (!audioReady) return;
-      var d = audioPlayer.getDuration(), c = audioPlayer.getCurrentTime();
-      if (d > 0) document.getElementById('progressBar').style.width = ((c / d) * 100) + '%';
-    }, 500);
+
+  function changeVolume(val) {
+    // Volume can't be controlled via iframe src directly, but unmute if muted
+    if (isMuted) toggleMute();
   }
 </script>
 </body>
