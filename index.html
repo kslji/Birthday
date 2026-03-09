@@ -685,29 +685,31 @@
   function onYouTubeIframeAPIReady() {
     audioPlayer = new YT.Player('audioYT', {
       videoId: 'YCNp7qfdYMQ',
-      playerVars: { autoplay: 1, loop: 1, playlist: 'YCNp7qfdYMQ', controls: 0, disablekb: 1, fs: 0, start: 13 },
+      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, start: 13, mute: 1 },
       events: {
         onReady: function(e) {
           audioReady = true;
-          e.target.setVolume(70);
+          e.target.mute();
+          e.target.seekTo(13, true);
           e.target.playVideo();
+          // Unmute after a short delay — browser allows muted autoplay, then we unmute
+          setTimeout(function() {
+            e.target.unMute();
+            e.target.setVolume(70);
+          }, 500);
           audioPlaying = true;
           document.getElementById('playPauseBtn').textContent = '⏸️';
           document.getElementById('songStatus').textContent = '♪ Now Playing...';
           startProgress();
-          function startOnInteract() {
-            if (audioReady) { e.target.playVideo(); audioPlaying = true; document.getElementById('playPauseBtn').textContent = '⏸️'; document.getElementById('songStatus').textContent = '♪ Now Playing...'; startProgress(); }
-            document.removeEventListener('click', startOnInteract);
-            document.removeEventListener('touchstart', startOnInteract);
-          }
-          document.addEventListener('click', startOnInteract);
-          document.addEventListener('touchstart', startOnInteract);
         },
         onStateChange: function(e) {
           if (e.data === YT.PlayerState.PLAYING) {
             audioPlaying = true; document.getElementById('playPauseBtn').textContent = '⏸️'; document.getElementById('songStatus').textContent = '♪ Now Playing...'; startProgress();
           } else if (e.data === YT.PlayerState.PAUSED) {
             audioPlaying = false; document.getElementById('playPauseBtn').textContent = '▶️'; document.getElementById('songStatus').textContent = 'Paused'; clearInterval(progressInterval);
+          } else if (e.data === YT.PlayerState.ENDED) {
+            e.target.seekTo(13, true);
+            e.target.playVideo();
           }
         }
       }
